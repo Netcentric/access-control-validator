@@ -1,0 +1,6 @@
+- variables:
+    - DAM: /content/dam
+      REPORTS: /etc/reports
+
+- invalid:
+

@@ -1,0 +1,29 @@
+- variables:
+    - PAGEROOT: /content/we-retail/us/en
+
+- tests:
+
+    - content-authors:
+
+        - pages:
+
+            - path: ${PAGEROOT}
+              actions: read
+              permission: allow
+
+            - FOR page IN [ men, women ]:
+
+                - path: ${PAGEROOT}/${page}
+                  actions: create, modify
+                  permission: allow
+                  template: /conf/we-retail/settings/wcm/templates/hero-page
+                  propertyNamesModify: jcr:title
+                  simulate: true
+                  
+                - path: ${PAGEROOT}/${page}
+                  actions: create
+                  permission: allow
+                  template: /conf/we-retail/settings/wcm/templates/hero-page
+                  propertyNamesModify: jcr:title
+                  simulate: true
+

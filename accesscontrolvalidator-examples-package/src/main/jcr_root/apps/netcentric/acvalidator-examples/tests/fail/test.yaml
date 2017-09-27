@@ -1,0 +1,23 @@
+- variables:
+    - PAGEROOT: /content/we-retail/us/en
+
+- tests:
+
+    - content-authors:
+
+        - pages:
+
+            - path: ${PAGEROOT}
+              actions: read
+              permission: deny
+
+            - FOR page IN [ men, women ]:
+
+                - path: ${PAGEROOT}/${page}
+                  actions: create, modify
+                  permission: deny
+                  
+                - path: ${PAGEROOT}/${page}
+                  actions: modify
+                  permission: deny
+

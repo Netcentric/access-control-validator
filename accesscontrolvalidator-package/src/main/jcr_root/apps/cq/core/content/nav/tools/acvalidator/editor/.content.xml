@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Edit Tests"
+    jcr:description="Create and edit rights and roles tests"
+    href="/apps/netcentric/acvalidator/tools/editor.html"
+    icon="edit"
+    />

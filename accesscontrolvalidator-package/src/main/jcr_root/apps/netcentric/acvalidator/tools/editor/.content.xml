@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root
+	xmlns:jcr="http://www.jcp.org/jcr/1.0"
+	xmlns:rep="internal"
+	xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+	xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+    jcr:primaryType="nt:unstructured"
+    consoleId="acvalidator-validator"
+    jcr:title="AC Validator - Editor"
+    sling:resourceType="granite/ui/components/shell/page"
+    >
+    <head jcr:primaryType="nt:unstructured">
+    	<clientlibs
+    		jcr:primaryType="nt:unstructured"
+    		sling:resourceType="granite/ui/components/foundation/includeclientlibs"
+    		categories="[coralui3,granite.ui.coral.foundation,acvalidator-editor]"
+    	/>
+    </head>
+    <title
+    	jcr:primaryType="nt:unstructured"
+    	text="AC Validator - Editor"
+    	sling:resourceType="granite/ui/components/coral/foundation/text"
+    />
+    <content
+    	jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container"
+        granite:class="acv-margin20"
+        >
+	    <items jcr:primaryType="nt:unstructured">
+			<textcontainer 
+	    		jcr:primaryType="nt:unstructured" 
+				sling:resourceType = "granite/ui/components/coral/foundation/container"
+				granite:class="acv-text"
+	    		>
+	    		<items jcr:primaryType="nt:unstructured">
+					<text
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/text"
+				text="Please select the file you want to edit. If it does not exist it will be created."
+					/>
+	    		</items>
+	    	</textcontainer>
+			<path
+				jcr:primaryType="nt:unstructured"
+				sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+				fieldLabel="File"
+				name="path"
+				required="{Boolean}true"
+				rootPath="/"
+				granite:class="acv-path-input"
+			/>
+	        <next
+	                jcr:primaryType="nt:unstructured"
+	                sling:resourceType="granite/ui/components/coral/foundation/button"
+	                granite:class="acv-margin20-top acv-editor-select-file-next"
+	                active="true"
+	                variant="primary"
+	                text="Next">
+	        </next>
+	    </items>
+    </content>
+</jcr:root>

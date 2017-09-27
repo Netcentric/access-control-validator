@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+    jcr:primaryType="rep:SystemUser"
+    jcr:uuid="f8877869-65eb-3b60-a589-0b31a92177bc"
+    rep:authorizableId="acvalidator-service"
+    rep:principalName="acvalidator-service"/>

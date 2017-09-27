@@ -1,0 +1,33 @@
+- tests:
+
+    - user-administrators:
+
+        - useradmin:
+
+            - FOR group IN [ dam-users, content-authors ]:
+
+                - action: assignUserToGroup
+                  group: ${group}
+                  permission: allow
+                  simulate: true
+
+            - action: createUser
+              permission: allow
+              path: a
+
+            - action: modifyUser
+              path: a
+              permission: allow
+
+            - action: modifyGroup
+              permission: allow
+              path: a
+
+            - permission: allow
+              action: createGroup
+              path: a
+    
+            - action: assignUserToGroup
+              group: dam-users
+              permission: allow
+              simulate: true

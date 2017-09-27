@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root
+	xmlns:jcr="http://www.jcp.org/jcr/1.0"
+	xmlns:rep="internal"
+	xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+	xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+    jcr:primaryType="nt:unstructured"
+    consoleId="acvalidator-validator"
+    jcr:title="AC Validator - Run Tests"
+    sling:resourceType="granite/ui/components/shell/page"
+    >
+    <head jcr:primaryType="nt:unstructured">
+    	<clientlibs
+    		jcr:primaryType="nt:unstructured"
+    		sling:resourceType="granite/ui/components/foundation/includeclientlibs"
+    		categories="[coralui3,granite.ui.coral.foundation,acvalidator-tests]"
+    	/>
+    </head>
+    <title
+    	jcr:primaryType="nt:unstructured"
+    	text="AC Validator"
+    	sling:resourceType="granite/ui/components/coral/foundation/text"
+    />
+    <content
+    	jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container"
+        >
+	    <items jcr:primaryType="nt:unstructured">
+	    	<wizard
+	    		jcr:primaryType="nt:unstructured"
+	    		sling:resourceType="granite/ui/components/coral/foundation/wizard"
+	    		jcr:title="Run Tests"
+	    		>
+	    		<items jcr:primaryType="nt:unstructured">
+			    	<step1 
+			    		jcr:primaryType="nt:unstructured" 
+						sling:resourceType = "granite/ui/components/coral/foundation/container"
+						jcr:title="Select folder"
+						granite:class="acv-margin20"
+			    		>
+							<parentConfig jcr:primaryType="nt:unstructured">
+						        <prev
+						                jcr:primaryType="nt:unstructured">
+						        </prev>
+						        <next
+						                jcr:primaryType="nt:unstructured"
+						                sling:resourceType="granite/ui/components/coral/foundation/button"
+						                granite:class="foundation-wizard-control acv-tests-select-folder-next"
+						                active="true"
+						                variant="primary"
+						                text="Next">
+						                <granite:data
+						                	jcr:primaryType="nt:unstructured"
+						                	foundation-wizard-control-action="next"/>
+						        </next>
+						 	</parentConfig>
+							<items jcr:primaryType="nt:unstructured">
+								<textcontainer 
+						    		jcr:primaryType="nt:unstructured" 
+									sling:resourceType = "granite/ui/components/coral/foundation/container"
+									jcr:title="Select folder"
+									granite:class="acv-text"
+						    		>
+						    		<items jcr:primaryType="nt:unstructured">
+										<text
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/text"
+											text="Please select the file/folder where your tests are located. If you select a folder then also all subfolders are searched for test cases."
+										/>
+						    		</items>
+						    	</textcontainer>
+								<path
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+									fieldLabel="Folder"
+									name="path"
+									required="{Boolean}true"
+									rootPath="/"
+									granite:class="acv-path-input"
+								/>
+								<simulate
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+									text="Skip simulation"
+									name="skipsimulation"
+									rootPath="/"
+									granite:class="acv-simulate-input"
+								/>
+							</items>
+			    	</step1>
+			    	<step2 
+						jcr:primaryType="nt:unstructured" 
+						sling:resourceType = "granite/ui/components/coral/foundation/container"
+						jcr:title="Select files and run"
+			    		>
+							<parentConfig jcr:primaryType="nt:unstructured">
+						        <next
+						                jcr:primaryType="nt:unstructured"
+						                sling:resourceType="granite/ui/components/coral/foundation/button"
+						                granite:class="foundation-wizard-control acv-tests-run"
+						                active="true"
+						                variant="primary"
+						                text="Run">
+						                <granite:data
+						                	jcr:primaryType="nt:unstructured"
+						                	foundation-wizard-control-action="next"/>
+						        </next>
+							</parentConfig>
+							<items jcr:primaryType="nt:unstructured">
+								<table
+									jcr:primaryType="nt:unstructured"
+						            sling:resourceType="granite/ui/components/coral/foundation/table"
+									layoutId="table"
+									selectionCount="multiple"
+									selectionMode="row"
+									skipEmptyRow="{Boolean}true"
+									granite:class="acv-tests-selection"
+									>
+									<columns
+										jcr:primaryType="nt:unstructured"
+									>
+										<select
+											jcr:primaryType="nt:unstructured"
+											select="{Boolean}true"
+										/>
+										<path
+											jcr:primaryType="nt:unstructured"
+											jcr:title="Path"
+										/>
+									</columns>
+								</table>
+								<text
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/heading"
+									level="1"
+									text="Test Results"
+									granite:class="acv-results-headline"
+								/>
+								<result
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="netcentric/acvalidator/components/result"
+								/>
+								<results 
+									jcr:primaryType="nt:unstructured" 
+									sling:resourceType = "granite/ui/components/coral/foundation/container"
+									granite:class="acv-tests-results acv-margin20"
+						    		>
+						    	</results>
+							</items>
+			    	</step2>
+	    		</items>
+	    	</wizard>
+	    </items>
+    </content>
+</jcr:root>

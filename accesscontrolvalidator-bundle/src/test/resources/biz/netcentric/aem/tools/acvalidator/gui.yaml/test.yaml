@@ -1,0 +1,87 @@
+-   variables:
+    -   DAM: /content/dam
+        REPORTS: /etc/reports
+-   variables:
+    -   DAM_P1: ${DAM}/p1
+        DAM_X: ${DAM_P1}/x
+-   tests:
+    -   myuser:
+        -   pages:
+            -   path: /content
+                actions: read, write, modify, publish
+                permission: allow
+            -   path: ${DAM}
+                actions: read
+                permission: allow
+            -   path: ${REPORTS}
+                actions: read
+                permission: deny
+            -   path: ${DAM_P1}
+                actions: readACL, writeACL
+                permission: allow
+            -   FOR brand IN [ BRAND1, BRAND2, BRAND3 ]:
+                -   path: /content/${brand}
+                    actions: create, modify
+                    permission: allow
+                    template: /apps/myapp/templates/page
+                    propertyNamesModify: jcr:title, summary
+                    simulate: 'true'
+                -   path: /content/${brand}/protected
+                    actions: read
+                    permission: deny
+                -   path: /content/${brand}/en
+                    actions: delete
+                    permission: deny
+                -   path: /content/${brand}/en/*
+                    actions: delete
+                    permission: allow
+                -   path: /content/${brand}/en/*
+                    actions: publish
+                    permission: allow
+                    simulate: 'true'
+                    isDeactivate: 'false'
+                -   path: /content/dam/${brand}
+                    actions: create, modify, delete, publish, rollOut
+                    permission: allow
+                    simulate: 'true'
+        -   useradmin:
+            -   FOR group IN [ readers, writers ]:
+                -   action: assignUserToGroup
+                    group: ${group}
+                    permission: allow
+                    simulate: 'true'
+                -   action: createUser
+                    permission: allow
+                    path: myusers
+                -   action: modifyUser
+                    userId: a
+                    permission: deny
+                -   action: modifyGroup
+                    permission: allow
+                    groupId: a
+                -   permission: allow
+                    action: createGroup
+                    path: mygroups
+            -   action: assignUserToGroup
+                group: admin
+                permission: deny
+                simulate: 'true'
+            -   action: createUser
+                path: myusers
+                permission: allow
+                simulate: 'true'
+            -   action: modifyUser
+                userId: a
+                permission: deny
+                simulate: 'true'
+            -   action: modifyGroup
+                groupId: a
+                permission: allow
+                simulate: 'true'
+            -   action: createGroup
+                permission: allow
+                path: mygroups
+                simulate: 'true'
+            -   action: createGroup
+                path: a
+                permission: deny

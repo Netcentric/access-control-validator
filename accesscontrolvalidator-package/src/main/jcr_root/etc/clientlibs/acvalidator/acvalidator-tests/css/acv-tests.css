@@ -1,0 +1,46 @@
+.acv-simulate-input {
+	margin-top: 20px;
+}
+
+.acv-results-headline {
+	margin: 20px;
+	margin-bottom: 40px;
+	display: none;
+}
+
+.acv-chart-text {
+  line-height: 1;
+  text-anchor: middle;
+  font-size: 0.5em;
+  transform: translateY(0.35em);
+}
+
+.acv-result {
+	margin-bottom: 40px;
+}
+
+.acv-result-table {
+	 width: 100%;
+}
+
+.acv-result-details-table {
+	width: 100%;
+	border: 1px solid #cbcbcb;
+	text-align: left;
+}
+
+.acv-result-details-table tr {
+	border: 1px solid #cbcbcb;
+}
+
+.acv-result-details-table td, .acv-result-details-table th {
+	padding: 3px;
+}
+
+.acv-ok-result {
+	background-color: #8dc396;
+}
+
+.acv-fail-result {
+	background-color: #ffb3b3;
+}
