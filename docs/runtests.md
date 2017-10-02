@@ -5,16 +5,16 @@ This is the most convenient method to run your tests. You can find the tool in A
 
 Tun run tests please select the base directory of your test files. You can also select to skip simulation of actions to do a quick run.
 
-<img src="docs/images/GUI_step_1.png">
+<img src="images/GUI_step_1.png">
 
 On the next page you can select which files should be executed. By default, all tests are run.
 
-<img src="docs/images/GUI_step_2.png">
+<img src="images/GUI_step_2.png">
 
 Now it is time to start test execution. You will see how many tests were executed and if there were any errors.
 You can also show the details of the test executions.
 
-<img src="docs/images/GUI_step_3.png">
+<img src="images/GUI_step_3.png">
 
 
 ## JMX Interface
