@@ -31,14 +31,13 @@ import biz.netcentric.aem.tools.acvalidator.model.Testable;
  * @author Roland Gruber
  */
 public class PageDeleteTest extends PageTestCase implements SimulatableTest, Testable {
-	
+
 	private final Logger LOG = LoggerFactory.getLogger(PageDeleteTest.class);
 
 	private String path;
 	private Authorizable authorizable;
-	private boolean isTestPageExisting;
 	private String errorMessage;
- 
+
 	/**
 	 * Constructor
 	 * 
@@ -56,18 +55,19 @@ public class PageDeleteTest extends PageTestCase implements SimulatableTest, Tes
 
 	@Override
 	public TestResult isOk(ResourceResolver serviceResourcerResolver, ResourceResolver testUserResolver, Authorizable authorizable) throws RepositoryException, LoginException {
-		if(this.simulate){
-			try {
-				isSimulateSuccess = deletePage(serviceResourcerResolver, testUserResolver);
-			} catch (WCMException e) {
-				LOG.error("Exception in PageDeleteTest: ", e);
-				throw new RepositoryException(e);
+		boolean isOk = false;
+		
+		if(isPageExisting(serviceResourcerResolver)){
+			if(this.simulate){
+				try {
+					isSimulateSuccess = deletePage(serviceResourcerResolver, testUserResolver);
+				} catch (WCMException e) {
+					LOG.error("Exception in PageDeleteTest: ", e);
+					throw new RepositoryException(e);
+				}
 			}
+			isOk = isOk(serviceResourcerResolver, authorizable);
 		}
-		if(!this.isTestPageExisting){
-			this.errorMessage = "testpage: " + path + " is not existing in repository!";
-		}
-		boolean isOk = isOk(serviceResourcerResolver, authorizable);
 		return new TestResult(authorizable.getID(), "Page Delete Test", " path: " + this.path + ", isSimulate:" + this.simulate + " isSimulateSuccess: " + this.isSimulateSuccess(), isOk, this.errorMessage);
 	}
 
@@ -75,27 +75,32 @@ public class PageDeleteTest extends PageTestCase implements SimulatableTest, Tes
 	public boolean isSimulateSuccess() {
 		return this.isSimulateSuccess;
 	}
-	
-	private boolean deletePage(ResourceResolver serviceResourcerResolver, ResourceResolver testUserResolver) throws WCMException  {
-		// check if given path from testcase is an existing page
+
+	private boolean isPageExisting(ResourceResolver serviceResourcerResolver){
 		PageManager servicePageManager = getPageManager(serviceResourcerResolver);
 		Page pageToDelete = servicePageManager.getPage(this.path);
 		if(pageToDelete == null){
 			this.errorMessage =  "testpage: " + this.path + " is not existing in repository!";
 			return false;
 		} 
-		
+		return true;
+	}
+
+	private boolean deletePage(ResourceResolver serviceResourcerResolver, ResourceResolver testUserResolver) throws WCMException  {
+		PageManager servicePageManager = getPageManager(serviceResourcerResolver);
+		Page pageToDelete = servicePageManager.getPage(this.path);
+
 		PageManager testPagemanager = getPageManager(testUserResolver);
 		try {
 			// TODO: clarify if param 'shallow' should be influenceable
 			// autosave set to false - we don't want to really delete the testpage
 			testPagemanager.delete(pageToDelete, false, false);
 		} catch (Exception e) {
-			this.errorMessage = e.getLocalizedMessage();
+			this.errorMessage = (e.getLocalizedMessage() != null) ? e.getLocalizedMessage() : e.toString();
 			return false;
 		}
 		testUserResolver.revert();
 		return true;
 	}
-	
+
 }
