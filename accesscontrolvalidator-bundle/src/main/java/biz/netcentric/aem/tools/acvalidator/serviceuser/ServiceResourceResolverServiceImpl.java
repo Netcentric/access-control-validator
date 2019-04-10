@@ -47,6 +47,13 @@ public class ServiceResourceResolverServiceImpl implements ServiceResourceResolv
 	}
 
 	@Override
+	public ResourceResolver getServiceResourceResolver(String authorizableID) throws LoginException {
+		final Map<String, Object> authenticationInfo = new HashMap<>();
+		authenticationInfo.put(ResourceResolverFactory.SUBSERVICE, authorizableID);
+		return resourceResolverFactory.getServiceResourceResolver(authenticationInfo);
+	}
+
+	@Override
 	public Session getUserSession(SimpleCredentials credentials) throws javax.jcr.LoginException, RepositoryException {
 		javax.jcr.Session session = repository.login(credentials);
 		return session;
