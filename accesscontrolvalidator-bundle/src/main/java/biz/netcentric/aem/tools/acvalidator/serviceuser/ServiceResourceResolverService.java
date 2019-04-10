@@ -29,7 +29,10 @@ public interface ServiceResourceResolverService {
 	 * @throws LoginException error getting resource resolver
 	 */
 	ResourceResolver getServiceResourceResolver() throws LoginException;
-	
+
+	ResourceResolver getServiceResourceResolver(String authorizableID) throws LoginException;
+
+
 	Session getUserSession(SimpleCredentials credentials) throws javax.jcr.LoginException, RepositoryException;
 
 
