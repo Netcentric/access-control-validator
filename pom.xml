@@ -27,9 +27,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/Netcentric/accesscontrolvalidator.git</connection>
-        <developerConnection>scm:git:https://github.com/Netcentric/accesscontrolvalidator.git</developerConnection>
-        <url>https://github.com/Netcentric/accesscontrolvalidator.git</url>
+        <connection>scm:git:https://github.com/Netcentric/access-control-validator.git</connection>
+        <developerConnection>scm:git:https://github.com/Netcentric/access-control-validator.git</developerConnection>
+        <url>https://github.com/Netcentric/access-control-validator.git</url>
         <tag>1.0.0</tag>
     </scm>
 
