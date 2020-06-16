@@ -39,12 +39,10 @@ public class AcTestSet {
 
 
 	private static final String ACVALIDATOR_TESTUSER_ID = "acvalidator-testuser";
-	private static final String ACVALIDATOR_TESTUSER_PASSWORD = "test";
+	private static final String ACVALIDATOR_TESTUSER_PASSWORD = "TZ%ukM!FLPa8";
 
 	private List<Testable> acTestCase;
 	private String authorizableID;
-	private String pathToTestfile;
-
 
 	/**
 	 * Constructor
@@ -54,7 +52,6 @@ public class AcTestSet {
 	public AcTestSet(String authorizableID, String pathToTestfile) {
 		this.authorizableID = authorizableID;
 		acTestCase = new ArrayList<>();
-		this.pathToTestfile = pathToTestfile;
 	}
 	public void addAcTestCase(Testable testable){
 		this.acTestCase.add(testable);
