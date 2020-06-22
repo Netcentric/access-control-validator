@@ -51,6 +51,7 @@ public class AclWriteTest extends PageTestCase implements SimulatableTest, Testa
 	 * 
 	 * @param path page path
 	 * @param isAllow test for allow
+	 * @param simulate simulate acl write
 	 */
 	public AclWriteTest(String path, boolean isAllow, boolean simulate) {
 		super(path, isAllow, "acl_edit");

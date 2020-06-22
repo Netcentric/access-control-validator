@@ -33,7 +33,8 @@ public class ModifyUserTest extends AuthorizableTestCase implements SimulatableT
 	/**
 	 * Constructor
 	 * 
-	 * @param path intermediate path for creating temporary testgroup used for this test
+	 * @param userID id of user subject to modification
+	 * @param isAllow if this action is expected to be allowed
 	 */
 	public ModifyUserTest(String userID, boolean isAllow) {
 		super("",isAllow);

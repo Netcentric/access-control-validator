@@ -35,6 +35,7 @@ public class UserCreateTest extends AuthorizableTestCase implements SimulatableT
 	 * Constructor
 	 * 
 	 * @param path page intermediate path for creating temporary testuser used for this test
+	 * @param isAllow if this action is expected to be allowed
 	 */
 	public UserCreateTest(String path, boolean isAllow) {
 		super(path,isAllow);		

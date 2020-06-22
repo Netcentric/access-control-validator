@@ -41,6 +41,7 @@ public class PageReadTest extends PageTestCase implements SimulatableTest, Testa
 	 * 
 	 * @param path page path
 	 * @param isAllow test for allow
+	 * @param simulate read
 	 */
 	public PageReadTest(String path, boolean isAllow, boolean simulate) {
 		super(path, isAllow, "read");

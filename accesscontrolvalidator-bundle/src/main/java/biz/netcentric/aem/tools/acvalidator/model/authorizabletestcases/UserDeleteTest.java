@@ -42,6 +42,7 @@ public class UserDeleteTest extends AuthorizableTestCase implements SimulatableT
 	 * Constructor
 	 * 
 	 * @param path intermediate path for creating temporary testuser used for this test
+	 * @param isAllow if this action is expected to be allowed
 	 */
 	public UserDeleteTest(String path, boolean isAllow) {
 		super(path, isAllow);

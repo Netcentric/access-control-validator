@@ -35,11 +35,6 @@ public class PageTestNode extends ConfigurationNode {
 	
 	Map<String, Property> properties = new LinkedHashMap();
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param node original node.
-	 */
 	public PageTestNode() {
 		super();
 		properties.put(PATH, new Property(PATH));
@@ -88,7 +83,7 @@ public class PageTestNode extends ConfigurationNode {
 	 * Adds the properties from the Yaml.
 	 * 
 	 * @param properties properties
-	 * @throws YamlParserException 
+	 * @throws YamlParserException error while parsing
 	 */
 	public void setPropertiesFromYaml(LinkedHashMap properties) throws YamlParserException {
 		for (Object key : properties.keySet()) {

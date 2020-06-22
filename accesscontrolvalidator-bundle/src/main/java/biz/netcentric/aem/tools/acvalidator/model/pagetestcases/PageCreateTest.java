@@ -46,7 +46,6 @@ public class PageCreateTest extends PageTestCase implements SimulatableTest, Tes
 	 * @param isAllow test for allow
 	 * @param simulate simulate write
 	 * @param template template path
-	 * @throws LoginException 
 	 */
 	public PageCreateTest(String path, boolean isAllow, boolean simulate, String template) {
 		super(path, isAllow, "create");

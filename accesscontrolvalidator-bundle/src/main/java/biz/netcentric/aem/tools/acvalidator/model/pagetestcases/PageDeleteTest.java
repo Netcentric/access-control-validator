@@ -44,7 +44,6 @@ public class PageDeleteTest extends PageTestCase implements SimulatableTest, Tes
 	 * @param path page path
 	 * @param isAllow test for allow
 	 * @param simulate simulate write
-	 * @param propertyNames propertyNames
 	 */
 	public PageDeleteTest(String path, boolean isAllow, boolean simulate) {
 		super(path, isAllow, "delete");

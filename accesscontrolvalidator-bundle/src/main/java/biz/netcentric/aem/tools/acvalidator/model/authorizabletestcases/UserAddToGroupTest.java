@@ -42,7 +42,8 @@ public class UserAddToGroupTest extends AuthorizableTestCase implements Simulata
 	/**
 	 * Constructor
 	 * 
-	 * @param path intermediate path for creating temporary testgroup used for this test
+	 * @param userID id of group a user should be added to
+	 * @param isAllow if this action is expected to be allowed
 	 */
 	public UserAddToGroupTest(String groupId, boolean isAllow) {
 		// TODO: clarify: path necessary here?

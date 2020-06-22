@@ -47,7 +47,6 @@ public class PageReplicateTest extends PageTestCase implements SimulatableTest, 
 	 * @param path page path
 	 * @param isAllow test for allow
 	 * @param simulate simulate write
-	 * @param propertyNames propertyNames
 	 * @param deactivate deactivate after replication
 	 */
 	public PageReplicateTest(String path, boolean isAllow, boolean simulate, boolean deactivate) {

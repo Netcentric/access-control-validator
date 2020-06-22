@@ -60,6 +60,7 @@ public class YamlTestSetMapper {
 	 * 
 	 * @param root root node
 	 * @param skipSimulation skip simulation even if configured in file
+	 * @param pathToTestfile path to testfile in repository
 	 */
 	public YamlTestSetMapper(RootNode root, boolean skipSimulation, String pathToTestfile) {
 		this.root = root;

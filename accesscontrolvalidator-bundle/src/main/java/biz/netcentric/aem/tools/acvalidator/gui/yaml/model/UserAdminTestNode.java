@@ -70,7 +70,7 @@ public abstract class UserAdminTestNode extends ConfigurationNode {
 	 * Adds the properties from the Yaml.
 	 * 
 	 * @param properties properties
-	 * @throws YamlParserException 
+	 * @throws YamlParserException error while parsing
 	 */
 	public void setPropertiesFromYaml(LinkedHashMap properties) throws YamlParserException {
 		int index = 0;

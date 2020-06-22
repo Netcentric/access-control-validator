@@ -48,6 +48,7 @@ public class AcTestSet {
 	 * Constructor
 	 * 
 	 * @param authorizableID user/group id
+	 * @param pathToTestfile path to testfile in repository
 	 */
 	public AcTestSet(String authorizableID, String pathToTestfile) {
 		this.authorizableID = authorizableID;
@@ -63,10 +64,10 @@ public class AcTestSet {
 
 	/**
 	 * creates the needed testuser and resolver needed for the testcases, executes the tests and cleans up afterwards
-	 * @param serviceResourceResolverService 
-	 * @return
-	 * @throws RepositoryException
-	 * @throws LoginException
+	 * @param serviceResourceResolverService instance of ServiceResourceResolverService
+	 * @return List of TestResult
+	 * @throws RepositoryException error during user creation
+	 * @throws LoginException error while creating ResourceResolver
 	 */
 	public List<TestResult> isOk(ServiceResourceResolverService serviceResourceResolverService) throws RepositoryException, LoginException {
 		List<TestResult> resultList = new ArrayList<>();

@@ -41,6 +41,7 @@ public class GroupDeleteTest extends AuthorizableTestCase implements Simulatable
 	 * Constructor
 	 * 
 	 * @param path intermediate path for creating temporary testgroup used for this test
+	 * @param isAllow if this action is expected to be allowed
 	 */
 	public GroupDeleteTest(String path, boolean isAllow) {
 		super(path, isAllow);

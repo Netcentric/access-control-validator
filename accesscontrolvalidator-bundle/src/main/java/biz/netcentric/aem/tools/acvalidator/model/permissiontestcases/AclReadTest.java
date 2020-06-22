@@ -41,6 +41,7 @@ public class AclReadTest extends PageTestCase implements SimulatableTest, Testab
 	 * 
 	 * @param path page path
 	 * @param isAllow test for allow
+	 * @param simulate simulate acl read
 	 */
 	public AclReadTest(String path, boolean isAllow, boolean simulate) {
 		super(path, isAllow, "acl_read");
