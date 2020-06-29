@@ -18,6 +18,20 @@
     <description>Maven project for Access Control Validator.</description>
     <url>https://github.com/Netcentric/accesscontrolvalidator</url>
 
+    <organization>
+        <name>Netcentric - A Cognizant Digital Business</name>
+        <url>https://www.netcentric.biz/</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Jochen Koschorke</name>
+            <email>jochen.koschorke@netcentric.biz</email>
+            <id>jochen.koschorke@netcentric.biz</id>
+            <organization>Netcentric</organization>
+            <organizationUrl>https://www.netcentric.biz/</organizationUrl>
+        </developer>
+    </developers>
+    
     <licenses>
         <license>
             <name>Eclipse Public License, Version 1.0</name>
