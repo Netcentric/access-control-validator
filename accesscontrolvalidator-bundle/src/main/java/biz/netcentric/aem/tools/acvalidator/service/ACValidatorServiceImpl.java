@@ -115,7 +115,7 @@ public class ACValidatorServiceImpl implements ACValidatorService {
 	}
 
 	private boolean isFolder(String primaryType) {
-		return "nt:folder".equals(primaryType) || "sling:folder".equals(primaryType) || "sling:ordererfolder".equals(primaryType);
+		return "nt:folder".equals(primaryType) || "sling:Folder".equals(primaryType) || "sling:OrderedFolder".equals(primaryType);
 	}
 
 	@Override
