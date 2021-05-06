@@ -69,6 +69,9 @@ public class ServiceResourceResolverServiceImpl implements ServiceResourceResolv
 			try {
 				adminResolver = resourceResolverFactory.getAdministrativeResourceResolver(null);
 				Session adminSession = adminResolver.adaptTo(Session.class);
+				if(adminSession == null) {
+					throw new IllegalStateException("Could not adapt ResourceResolver to Session!");
+				}
 				systemUserSession = adminSession.impersonate(new SimpleCredentials(authorizableID, new char[0]));
 				return resourceResolverFactory.getResourceResolver(Collections.singletonMap("user.jcr.session", (Object) systemUserSession));
 			} catch (RepositoryException | LoginException e) {

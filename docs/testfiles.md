@@ -1,6 +1,6 @@
 ## Overall structure a of an AC test definition file
 
-Every testfile comprises one or more variables section(s) (optional) and a „tests“ section. Inside, there can be testcases for one or more groups/systemuser. A group/systemuser for wich tescases should be executed gets defined by the respective ID. Inside each block, there can be page related testcases inside a „pages“ block and user/group related testcases inside a „useradmin“ block.
+Every testfile comprises one or more variables section(s) (optional) and a „tests“ section. Inside, there can be testcases for one or more groups/systemuser. A group/systemuser for wich testcases should be executed gets defined by the respective ID. Inside each block, there can be page related testcases inside a „pages“ block and user/group related testcases inside a „useradmin“ block.
 
 So here’s the overall structure:
 ```
