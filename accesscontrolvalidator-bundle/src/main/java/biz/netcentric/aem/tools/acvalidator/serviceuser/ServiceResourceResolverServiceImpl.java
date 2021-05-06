@@ -8,6 +8,7 @@
  */
 package biz.netcentric.aem.tools.acvalidator.serviceuser;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +36,9 @@ public class ServiceResourceResolverServiceImpl implements ServiceResourceResolv
 
 	@Reference
 	ResourceResolverFactory resourceResolverFactory;
-	
+
 	@Reference
-    SlingRepository repository;
+	SlingRepository repository;
 
 	@Override
 	public ResourceResolver getServiceResourceResolver() throws LoginException {
@@ -51,13 +52,34 @@ public class ServiceResourceResolverServiceImpl implements ServiceResourceResolv
 		javax.jcr.Session session = repository.login(credentials);
 		return session;
 	}
-	
+
 	@Override
 	public ResourceResolver getTestUserResourceResolver(String username, String password) throws LoginException {
 		final Map<String, Object> authenticationInfo = new HashMap<>();
 		authenticationInfo.put(ResourceResolverFactory.USER, username);
-        authenticationInfo.put(ResourceResolverFactory.PASSWORD, password.toCharArray());
+		authenticationInfo.put(ResourceResolverFactory.PASSWORD, password.toCharArray());
 		return resourceResolverFactory.getResourceResolver(authenticationInfo);
+	}
+
+	@Override
+	public ResourceResolver getSystemUserResourceResolver(String authorizableID) {
+		ResourceResolver adminResolver = null;
+		Session systemUserSession = null;
+		try {
+			try {
+				adminResolver = resourceResolverFactory.getAdministrativeResourceResolver(null);
+				Session adminSession = adminResolver.adaptTo(Session.class);
+				systemUserSession = adminSession.impersonate(new SimpleCredentials(authorizableID, new char[0]));
+				return resourceResolverFactory.getResourceResolver(Collections.singletonMap("user.jcr.session", (Object) systemUserSession));
+			} catch (RepositoryException | LoginException e) {
+				throw new IllegalStateException(e);
+			}
+		} finally {
+			if(adminResolver != null) {
+				adminResolver.close();
+			}
+		}
+
 	}
 
 }

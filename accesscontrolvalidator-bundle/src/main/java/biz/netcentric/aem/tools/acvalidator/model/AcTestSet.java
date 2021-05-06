@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 
+import org.apache.jackrabbit.api.security.user.Authorizable;
 import org.apache.jackrabbit.api.security.user.AuthorizableExistsException;
 import org.apache.jackrabbit.api.security.user.Group;
 import org.apache.jackrabbit.api.security.user.User;
@@ -34,7 +37,7 @@ import biz.netcentric.aem.tools.acvalidator.serviceuser.ServiceResourceResolverS
  *
  */
 public class AcTestSet {
-	
+
 	private final Logger LOG = LoggerFactory.getLogger(AcTestSet.class);
 
 
@@ -57,7 +60,7 @@ public class AcTestSet {
 	public void addAcTestCase(Testable testable){
 		this.acTestCase.add(testable);
 	}
-	
+
 	public String getAuthorizableID(){
 		return this.authorizableID;
 	}
@@ -72,7 +75,7 @@ public class AcTestSet {
 	public List<TestResult> isOk(ServiceResourceResolverService serviceResourceResolverService) throws RepositoryException, LoginException {
 		List<TestResult> resultList = new ArrayList<>();
 		User testuser = null;
-		Group testGroup = null;
+		Authorizable authorizableToTest = null;
 		ResourceResolver serviceResourcerResolver = null;
 		ResourceResolver testUserResolver = null;
 		try {
@@ -80,33 +83,37 @@ public class AcTestSet {
 			serviceResourcerResolver = serviceResourceResolverService.getServiceResourceResolver();
 
 			UserManager userManager = getUserManager(serviceResourcerResolver);
+			boolean isSystemUser = !userManager.getAuthorizable(authorizableID).isGroup();
+			if (isSystemUser) {
+				testUserResolver = serviceResourceResolverService.getSystemUserResourceResolver(authorizableID);
+				authorizableToTest = userManager.getAuthorizable(authorizableID);
+			} else {
+				testuser =  userManager.createUser(ACVALIDATOR_TESTUSER_ID, ACVALIDATOR_TESTUSER_PASSWORD);
+				authorizableToTest = getTestGroup(getUserManager(serviceResourcerResolver), authorizableID, testuser);
 
-			testuser =  userManager.createUser(ACVALIDATOR_TESTUSER_ID, ACVALIDATOR_TESTUSER_PASSWORD);
-			testGroup = getTestGroup(getUserManager(serviceResourcerResolver), authorizableID, testuser);
-
-			// we need to persist the created testuser in order to be able to get a resolver for him 
-			serviceResourcerResolver.commit();
-			LOG.debug("comitting serviceResourcerResolver to persist testuser");
-			// create ResourceResolver for the testuser based on his permissions
-			testUserResolver = serviceResourceResolverService.getTestUserResourceResolver(ACVALIDATOR_TESTUSER_ID, ACVALIDATOR_TESTUSER_PASSWORD);
-
+				// we need to persist the created testuser in order to be able to get a resolver for him 
+				serviceResourcerResolver.commit();
+				LOG.debug("comitting serviceResourcerResolver to persist testuser");
+				// create ResourceResolver for the testuser based on his permissions
+				testUserResolver = serviceResourceResolverService.getTestUserResourceResolver(ACVALIDATOR_TESTUSER_ID, ACVALIDATOR_TESTUSER_PASSWORD);
+			}
 			// execute all testcases for the testuser
 			for(Testable testable: acTestCase){
-				resultList.add(testable.isOk(serviceResourcerResolver, testUserResolver, testGroup));
+				resultList.add(testable.isOk(serviceResourcerResolver, testUserResolver, authorizableToTest));
 			}
 		} catch (PersistenceException e) {
 			throw new RepositoryException(e);
 		}finally{
 			// clean up temporary testuser
-			if(testGroup != null && testuser != null){
-				testGroup.removeMember(testuser);
+			if(authorizableToTest != null  && authorizableToTest instanceof Group && testuser != null){
+				((Group)authorizableToTest).removeMember(testuser);
 			}
 			if(testuser != null){
 				testuser.remove();
 			}
-			
+
 			// close resolvers
-			
+
 			if(testUserResolver != null){
 				testUserResolver.revert();
 				testUserResolver.close();
