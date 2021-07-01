@@ -35,4 +35,7 @@ public interface ServiceResourceResolverService {
 
 	ResourceResolver getTestUserResourceResolver(String username, String password) throws LoginException;
 
+
+	ResourceResolver getSystemUserResourceResolver(String authorizableID);
+
 }
