@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.jackrabbit.api.security.user.AuthorizableExistsException;
 import org.apache.jackrabbit.api.security.user.Group;
@@ -96,34 +97,41 @@ public class AcTestSet {
 			}
 		} catch (PersistenceException e) {
 			throw new RepositoryException(e);
-		}finally{
-			// clean up temporary testuser
-			if(testGroup != null && testuser != null){
-				testGroup.removeMember(testuser);
-			}
-			if(testuser != null){
-				testuser.remove();
-			}
-			
-			// close resolvers
-			
-			if(testUserResolver != null){
-				testUserResolver.revert();
-				testUserResolver.close();
-			}
-
-			if(serviceResourcerResolver != null){
-				try {
-					if(serviceResourcerResolver.hasChanges()){
-						serviceResourcerResolver.commit();
-					}
-					serviceResourcerResolver.close();
-				} catch (PersistenceException e) {
-					throw new RepositoryException(e);
-				}
-			}
+		} finally {
+			cleanup(testGroup, testuser, testUserResolver, serviceResourcerResolver);
 		}
 		return resultList;
+	}
+
+	private void cleanup(Group testGroup, User testuser, ResourceResolver testUserResolver, ResourceResolver serviceResourcerResolver) {
+		// Close test user resolver first to stop any auth-subsystem writes to the user node
+		if (testUserResolver != null) {
+			testUserResolver.revert();
+			testUserResolver.close();
+		}
+		if (serviceResourcerResolver != null) {
+			try {
+				// Refresh to incorporate auth-subsystem writes (e.g. rep:lastLogin) made when
+				// the test user session was opened — without this, Oak raises OakState0001
+				// due to unresolved conflicts on the user node at commit time
+				Session session = serviceResourcerResolver.adaptTo(Session.class);
+				if (session != null) {
+					session.refresh(true);
+				}
+				if (testGroup != null && testuser != null) {
+					testGroup.removeMember(testuser);
+				}
+				if (testuser != null) {
+					testuser.remove();
+				}
+				serviceResourcerResolver.commit();
+			} catch (RepositoryException | PersistenceException e) {
+				LOG.error("Could not clean up testuser: {}", e.getMessage(), e);
+				serviceResourcerResolver.revert();
+			} finally {
+				serviceResourcerResolver.close();
+			}
+		}
 	}
 
 	private Group getTestGroup(UserManager userManager, String authorizableID, User testuser) throws AuthorizableExistsException, RepositoryException{
