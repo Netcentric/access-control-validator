@@ -8,6 +8,8 @@
  */
 package biz.netcentric.aem.tools.acvalidator.model.restrictiontestcases;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
@@ -74,12 +76,22 @@ public class AceRestrictionTest implements Testable {
         Node policyNode = session.getNode(policyPath);
         NodeIterator aceIterator = policyNode.getNodes();
 
+        List<String> aceFailures = new ArrayList<>();
         while (aceIterator.hasNext()) {
             Node aceNode = aceIterator.nextNode();
             if (!isMatchingAce(aceNode, principalName)) {
                 continue;
             }
-            return checkRestrictions(aceNode, principalName, description);
+            TestResult result = checkRestrictions(aceNode, principalName, description);
+            if (result.isOk()) {
+                return result;
+            }
+            aceFailures.add(result.getErrorMessage());
+        }
+
+        if (!aceFailures.isEmpty()) {
+            return fail(principalName, description,
+                    "Found " + aceFailures.size() + " matching ACE(s) but none had the expected restrictions: " + aceFailures);
         }
 
         return fail(principalName, description,
