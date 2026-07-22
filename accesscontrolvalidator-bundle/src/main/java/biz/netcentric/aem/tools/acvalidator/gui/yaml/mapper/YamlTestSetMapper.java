@@ -17,6 +17,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.AclRestrictionTestNode;
+import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.AclRestrictionsNode;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.AssignUserToGroupNode;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.ConfigurationNode;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.CreateGroupNode;
@@ -29,6 +31,7 @@ import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.Property;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.RootNode;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.UserAdminNode;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.model.UserAdminTestNode;
+import biz.netcentric.aem.tools.acvalidator.model.restrictiontestcases.AceRestrictionTest;
 import biz.netcentric.aem.tools.acvalidator.gui.yaml.parser.YamlParserException;
 import biz.netcentric.aem.tools.acvalidator.model.AcTestSet;
 import biz.netcentric.aem.tools.acvalidator.model.authorizabletestcases.GroupCreateTest;
@@ -102,6 +105,9 @@ public class YamlTestSetMapper {
 			}
 			else if (node instanceof UserAdminNode) {
 				addUserAdminTests(testSet, (UserAdminNode) node);
+			}
+			else if (node instanceof AclRestrictionsNode) {
+				addAclRestrictionTests(testSet, (AclRestrictionsNode) node);
 			}
 		}
 	}
@@ -207,6 +213,18 @@ public class YamlTestSetMapper {
 				ModifyUserTest userAddToGroupTest = new ModifyUserTest(modifyGroupNode.getPropertyByName(ModifyUserNode.USER_ID).getValue(), modifyGroupNode.isAllow());
 				testSet.addAcTestCase(userAddToGroupTest);
 			}
+		}
+	}
+
+	private void addAclRestrictionTests(AcTestSet testSet, AclRestrictionsNode node) throws YamlParserException {
+		for (ConfigurationNode subnode : node.getSubnodes()) {
+			AclRestrictionTestNode restrictionNode = (AclRestrictionTestNode) subnode;
+			AceRestrictionTest test = new AceRestrictionTest(
+					restrictionNode.getPath(),
+					restrictionNode.getPrivilege(),
+					restrictionNode.isAllow(),
+					restrictionNode.getRestrictions());
+			testSet.addAcTestCase(test);
 		}
 	}
 }

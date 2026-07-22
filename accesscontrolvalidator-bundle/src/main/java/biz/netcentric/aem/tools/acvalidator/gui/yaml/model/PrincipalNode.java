@@ -35,7 +35,7 @@ public class PrincipalNode extends ConfigurationNode {
 
 	@Override
 	public List<Class> getAllowedSubnodeClasses() {
-		return Arrays.asList(new Class[] {PagesNode.class, UserAdminNode.class});
+		return Arrays.asList(new Class[] {PagesNode.class, UserAdminNode.class, AclRestrictionsNode.class});
 	}
 
 	@Override
@@ -68,6 +68,9 @@ public class PrincipalNode extends ConfigurationNode {
 				else if (UserAdminNode.NAME.equals(identifier)) {
 					addUseradminNode((List<LinkedHashMap>) subnode.get(UserAdminNode.NAME));
 				}
+				else if (AclRestrictionsNode.NAME.equals(identifier)) {
+					addAclRestrictionsNode((List<LinkedHashMap>) subnode.get(AclRestrictionsNode.NAME));
+				}
 				else {
 					throw new YamlParserException("Unknown subnode for principals: " + identifier.toString());
 				}
@@ -89,7 +92,7 @@ public class PrincipalNode extends ConfigurationNode {
 
 	/**
 	 * Adds a userAdmin node.
-	 * 
+	 *
 	 * @param subnodes subnodes
 	 * @throws YamlParserException error while parsing
 	 */
@@ -97,6 +100,18 @@ public class PrincipalNode extends ConfigurationNode {
 		UserAdminNode useradminNode = new UserAdminNode();
 		useradminNode.addNodesFromYaml(subnodes);
 		addSubnode(useradminNode);
+	}
+
+	/**
+	 * Adds an aclrestrictions node.
+	 *
+	 * @param subnodes subnodes
+	 * @throws YamlParserException error while parsing
+	 */
+	private void addAclRestrictionsNode(List<LinkedHashMap> subnodes) throws YamlParserException {
+		AclRestrictionsNode aclRestrictionsNode = new AclRestrictionsNode();
+		aclRestrictionsNode.addNodesFromYaml(subnodes);
+		addSubnode(aclRestrictionsNode);
 	}
 
 }
