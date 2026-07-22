@@ -6,6 +6,7 @@ The Access Control Validator provides an easy to use tool for testers and develo
 Features:
 * Easy-to-read Yaml configuration file format
 * Page and user management tests
+* ACL restriction testing (standard Oak restrictions and AEM Metadata Driven Permissions)
 * Run mode support
 * Health checks
 * Service API
@@ -19,6 +20,9 @@ Supported test cases:
   * Create, modify user
   * Assign user to group
   * Create, modify groups
+* ACL restrictions
+  * Verify standard Oak restrictions (`rep:glob`, `rep:ntNames`, `rep:prefixes`, `rep:itemNames`)
+  * Verify custom AEM Metadata Driven Permissions restrictions registered via `DefaultRestrictionProviderConfiguration`
 
 All tests can be performed as positive (action is allowed) and negative (action is denied) case.
 
@@ -46,7 +50,7 @@ Examples:
 
 # Requirements
 
-The AC Tool requires Java 7 and AEM 6.2 or later.
+The AC Tool requires Java 8 and AEM 6.2 or later, including AEM as a Cloud Service (AEMaaCS).
 
 # Installation
 
