@@ -7,6 +7,7 @@ Features:
 * Easy-to-read Yaml configuration file format
 * Page and user management tests
 * ACL restriction testing (standard Oak restrictions and AEM Metadata Driven Permissions)
+* Testing of systemusers (since v1.0.2)
 * Run mode support
 * Health checks
 * Service API
@@ -32,6 +33,8 @@ Apart from simply checking the set permission in the repository (contained in th
 Therefore the tool temporarily creates a testuser, makes it member of the group of interest and tries to execute the desired action using the testusers’ session and the respective API needed for the action to be done ( Sling API, AEM API, Jackrabbit API,…)
 
 This not only makes testing more thorough but also allows to define additional parameters in the respective test definition like e.g. a template when testing if a page can be creates under a certain path of a property name which will be used when testing if modification of a page is possible.
+
+Also systemuser permission can be tested using the Tool. In that case a testuser creation is not needed. Instead the tool uses an administrative session impersonating the systemuser of interest. In order for this to work, the accescontrolvalidator bundle is whitelisted via OSGi configuration.
 
 The tool does not leave any test content in the repository such as the testuser, or modified properties, by either not persisting any changes or if this can not be avoided, deletes them when the test is done.
 
