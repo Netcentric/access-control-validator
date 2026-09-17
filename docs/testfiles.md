@@ -123,6 +123,64 @@ additional parameters:
 
 *isDeactivate*: publication action activate or deactivate will be tested by the tool in simulation mode. Can be one of *true* or *false*. Mandatory when simulate is set to 'true'.
 
+###ACL Restriction Testcases:
+
+The `aclrestrictions` block inspects the `rep:restrictions` node of an ACE directly in the JCR to verify that restriction properties are present with the expected values. This covers both standard Oak restrictions (e.g. `rep:glob`, `rep:ntNames`) and custom AEM metadata restrictions registered via `com.adobe.cq.dam.assetmetadatarestrictionprovider.impl.DefaultRestrictionProviderConfiguration`.
+
+**Properties:**
+
+<b>path</b>: the path whose `rep:policy` node will be inspected.
+
+<b>privilege</b>: the JCR privilege of the ACE to inspect (e.g. `jcr:read`, `jcr:all`).
+
+<b>permission</b>: either `allow` or `deny` — selects the ACE type (`rep:GrantACE` / `rep:DenyACE`).
+
+<b>restrictions</b>: a map of restriction property names and their expected values. Multi-value restrictions (e.g. `rep:ntNames`) are expressed as comma-separated strings.
+
+The test passes as soon as any matching ACE (same principal, privilege and permission type) satisfies all expected restriction values. This correctly handles cases where multiple ACEs for the same principal and privilege exist on a path.
+
+**Important:** For AEM Metadata Driven Permissions, this check only validates that the restriction is correctly configured on the ACE at the policy path. Whether a specific asset below that path actually carries the required metadata property must be tested separately using the `pages` block (non-simulate, CqActions evaluation).
+
+Example — standard Oak restriction:
+```
+- aclrestrictions:
+    - path: /content/dam/brand
+      privilege: jcr:read
+      permission: allow
+      restrictions:
+        rep:glob: "*/jcr:content*"
+```
+
+Example — AEM metadata restriction:
+```
+- aclrestrictions:
+    - path: /content/dam/brand
+      privilege: jcr:all
+      permission: allow
+      restrictions:
+        brand: Adobe
+```
+
+Example — combined standard and metadata restrictions:
+```
+- aclrestrictions:
+    - path: /content/dam/brand
+      privilege: jcr:all
+      permission: allow
+      restrictions:
+        rep:glob: "*/jcr:content*"
+        brand: Adobe
+```
+
+Example — assert no restrictions on an ACE:
+```
+- aclrestrictions:
+    - path: /content/dam/public
+      privilege: jcr:read
+      permission: allow
+      restrictions: {}
+```
+
 ###User/Group Testcases:
 
 Since for these tescases there is no cq:action equivalent which could be tested against by simply checking set permissions in the repository, simulation of the action always takes place. Therefore no *simulate* parameter needs to be added.

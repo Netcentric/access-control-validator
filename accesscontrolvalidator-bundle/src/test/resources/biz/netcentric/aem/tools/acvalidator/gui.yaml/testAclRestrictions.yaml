@@ -1,0 +1,21 @@
+- variables:
+    - BRAND: Adobe
+
+- tests:
+
+    - myproject-service-user:
+
+        - aclrestrictions:
+
+            - path: /content/dam/brand
+              privilege: jcr:read
+              permission: allow
+              restrictions:
+                rep:glob: "*/jcr:content*"
+                rep:ntNames: nt:unstructured,dam:Asset
+                brand: ${BRAND}
+
+            - path: /content/dam/public
+              privilege: jcr:all
+              permission: deny
+              restrictions: {}
