@@ -49,7 +49,7 @@ Examples:
 
 # Requirements
 
-The AC Tool requires Java 7 and AEM 6.2 or later.
+The AC Tool requires Java 8 and AEM 6.2 or later, including AEM as a Cloud Service (AEMaaCS).
 
 # Installation
 
