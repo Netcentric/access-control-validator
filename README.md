@@ -53,7 +53,10 @@ Examples:
 
 # Requirements
 
-The AC Tool requires Java 8 and AEM 6.2 or later, including AEM as a Cloud Service (AEMaaCS).
+The AC Tool requires Java 8 and AEM 6.5 or later, including AEM as a Cloud Service (AEMaaCS).
+
+AEM 6.5 is the minimum because the tool declares its service user with the principal-based
+`user.mapping` format, which requires Sling Service User Mapper 1.3.4 or newer.
 
 # Installation
 
