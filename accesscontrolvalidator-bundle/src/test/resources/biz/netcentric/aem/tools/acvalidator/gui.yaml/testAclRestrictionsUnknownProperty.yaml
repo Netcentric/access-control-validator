@@ -1,0 +1,10 @@
+- tests:
+
+    - myproject-service-user:
+
+        - aclrestrictions:
+
+            - path: /content/dam/brand
+              privilege: jcr:read
+              permission: allow
+              bogus: value
