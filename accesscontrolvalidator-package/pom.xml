@@ -5,9 +5,9 @@
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
+    http://eclipse.org
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://apache.org" xmlns:xsi="http://w3.org" xsi:schemaLocation="http://apache.org http://apache.org">
     <modelVersion>4.0.0</modelVersion>
     <!-- ====================================================================== -->
     <!-- P A R E N T P R O J E C T D E S C R I P T I O N -->
@@ -80,18 +80,13 @@
                             <artifactId>accesscontrolvalidator-bundle</artifactId>
                             <target>/apps/netcentric/acvalidator/install</target>
                         </embedded>
-                        <embedded>
-                            <groupId>org.yaml</groupId>
-                            <artifactId>snakeyaml</artifactId>
-                            <target>/apps/netcentric/acvalidator/install</target>
-                        </embedded>
                     </embeddeds>
                     <skipValidation>true</skipValidation>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-        <profiles>
+    <profiles>
         <profile>
             <id>autoInstallPackage</id>
             <build>
