@@ -138,27 +138,28 @@
             <scope>provided</scope>
         </dependency>
 
-
     </dependencies>
-
 
     <!-- ====================================================================== -->
     <!-- B U I L D D E F I N I T I O N -->
     <!-- ====================================================================== -->
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
                 <configuration>
-                <instructions>
-                    <Import-Package>
-                        org.apache.jackrabbit.oak.spi.security.authentication.external;version="[1.0,3)",
-                        *
-                    </Import-Package>              
-                </instructions>
-              </configuration>
+                    <instructions>
+                        <Embed-Dependency>snakeyaml;scope=compile|runtime;inline=false</Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <_exportcontents>biz.netcentric.aem.tools.accesscontrolvalidator.*</_exportcontents>
+                        <Import-Package>
+                            org.apache.jackrabbit.oak.spi.security.authentication.external;version="[1.0,3)",
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -180,20 +181,6 @@
                     <usePut>true</usePut>
                 </configuration>
             </plugin>
-            <plugin>
-    <groupId>org.apache.felix</groupId>
-    <artifactId>maven-bundle-plugin</artifactId>
-    <extensions>true</extensions>
-    <configuration>
-        <instructions>
-            <!-- Add or modify the Import-Package element here -->
-            <Import-Package>
-                org.yaml.snakeyaml;version="[1.13,3.0)",
-                *
-            </Import-Package>
-        </instructions>
-    </configuration>
-</plugin>
         </plugins>
     </build>
 </project>

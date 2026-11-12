@@ -80,18 +80,13 @@
                             <artifactId>accesscontrolvalidator-bundle</artifactId>
                             <target>/apps/netcentric/acvalidator/install</target>
                         </embedded>
-                        <embedded>
-                            <groupId>org.yaml</groupId>
-                            <artifactId>snakeyaml</artifactId>
-                            <target>/apps/netcentric/acvalidator/install</target>
-                        </embedded>
                     </embeddeds>
                     <skipValidation>true</skipValidation>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-        <profiles>
+    <profiles>
         <profile>
             <id>autoInstallPackage</id>
             <build>
